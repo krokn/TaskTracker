@@ -41,3 +41,4 @@ __screenshots__/
 
 frontend/frotest-results/
 frontend/playwright-report/
+frontend/package-lock.json
