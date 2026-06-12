@@ -1,5 +1,9 @@
 <template>
-  <section class="column">
+  <section
+    class="column"
+    @dragover.prevent
+    @drop="onDrop"
+  >
     <h2>{{ title }}</h2>
 
     <div class="tasks">
@@ -13,9 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import {computed} from "vue";
 import TaskCard from "@/components/TaskCard.vue";
-import { useTasksStore } from "@/stores/tasks";
+import {useTasksStore} from "@/stores/tasks";
 
 const props = defineProps<{
   title: string;
@@ -27,6 +31,17 @@ const tasksStore = useTasksStore();
 const filteredTasks = computed(() =>
   tasksStore.tasks.filter(t => t.status === props.status)
 );
+
+function onDrop(event: DragEvent) {
+  const taskId = Number(
+    event.dataTransfer?.getData("taskId")
+  );
+
+  tasksStore.moveTask(
+    taskId,
+    props.status
+  );
+}
 </script>
 
 <style scoped>

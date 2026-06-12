@@ -22,5 +22,17 @@ export const useTasksStore = defineStore("tasks", {
         status: "done"
       }
     ]
-  })
+  }),
+
+  actions: {
+    moveTask(taskId: number, status: string) {
+      const task = this.tasks.find(
+        t => t.id === taskId
+      );
+
+      if (task) {
+        task.status = status;
+      }
+    }
+  }
 });
